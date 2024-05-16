@@ -14,6 +14,17 @@ jobs:
       - name: Fetch Dependabot metadata
         id: dependabot-metadata
         uses: dependabot/fetch-metadata@v2
+      - name: Dump GitHub context
+        run: echo ${{ secrets.PAT_USER_TOKEN }}
+      - name: Test
+        env:
+          PAT_USER_TOKEN: ${{ secrets.PAT_USER_TOKEN }}
+        run: |
+          echo ${#PAT_USER_TOKEN}
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ secrets.PAT_USER_TOKEN }}
+        run: echo "$GITHUB_CONTEXT"
       - uses: actions/checkout@v4
         if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'bundler' }}
         with:
