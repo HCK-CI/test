@@ -18,6 +18,7 @@ jobs:
         if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'bundler' }}
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+          token: ${{ secrets.YOUR_SECRET_NAME }}
 
       - name: Update Ubuntu package repository
         if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'bundler' }}
