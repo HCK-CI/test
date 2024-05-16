@@ -42,7 +42,7 @@ jobs:
         run: |
           git config --global user.name 'Daynix GitHub Actions'
           git config --global user.email 'gha@daynix.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git remote set-url origin https://x-access-token:${{ secrets.YOUR_SECRET_NAME }}@github.com/$GITHUB_REPOSITORY
           git add sorbet/rbi/gems
           git commit -m "updated tapioca definitions" sorbet/rbi/gems
           git push -u origin HEAD:${{ github.event.pull_request.head.ref }}
