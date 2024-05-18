@@ -1,0 +1,38 @@
+name: Dependabot Tapioca updates
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+jobs:
+  build:
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Dependabot metadata
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'bundler' }}
+        with:
+          token: ${{ secrets.PAT_USER_TOKEN }}
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Setup AutoHCK
+        uses: ./.github/actions/setup-autohck
+
+      - name: Tapioca update
+        if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'bundler' }}
+        run: bundle exec tapioca gem
+      - name: add label
+        uses: actions-ecosystem/action-add-labels@v1
+        if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'bundler' }}
+        with:
+          labels: rbi-ready
+      - name: git update
+        if: ${{ steps.dependabot-metadata.outputs.package-ecosystem == 'bundler' }}
+        run: |
+          git config --global user.name 'Daynix GitHub Actions'
+          git config --global user.email 'gha@daynix.com'
+          git add sorbet/rbi/gems
+          git commit -m 'Update tapioca RBIs' sorbet/rbi/gems
+          git push -u origin HEAD:${{ github.event.pull_request.head.ref }}
