@@ -35,6 +35,12 @@ jobs:
       uses: github/codeql-action/analyze@v3
 
   rspec:
+    if: |
+      (contains(github.event.issue.labels.*.name, 'dependencies') &&
+      contains(github.event.issue.labels.*.name, 'ruby') &&
+      contains(github.event.issue.labels.*.name, 'tapioca-ready')) || (
+      !contains(github.event.issue.labels.*.name, 'dependencies') &&
+      !contains(github.event.issue.labels.*.name, 'ruby'))
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
@@ -48,6 +54,12 @@ jobs:
       run: bundle exec rspec
 
   typecheck:
+    if: |
+      (contains(github.event.issue.labels.*.name, 'dependencies') &&
+      contains(github.event.issue.labels.*.name, 'ruby') &&
+      contains(github.event.issue.labels.*.name, 'tapioca-ready')) || (
+      !contains(github.event.issue.labels.*.name, 'dependencies') &&
+      !contains(github.event.issue.labels.*.name, 'ruby'))
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
@@ -64,6 +76,12 @@ jobs:
       run: bundle exec srb typecheck
 
   rubocop:
+    if: |
+      (contains(github.event.issue.labels.*.name, 'dependencies') &&
+      contains(github.event.issue.labels.*.name, 'ruby') &&
+      contains(github.event.issue.labels.*.name, 'tapioca-ready')) || (
+      !contains(github.event.issue.labels.*.name, 'dependencies') &&
+      !contains(github.event.issue.labels.*.name, 'ruby'))
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
