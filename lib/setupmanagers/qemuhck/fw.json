@@ -1,0 +1,13 @@
+{
+  "bios": {
+    "disk_config": "bios"
+  },
+  "uefi": {
+    "disk_config": "uefi",
+    "binary": {
+      "secure": "/usr/share/OVMF/OVMF_CODE.secboot.fd",
+      "insecure": "/usr/share/OVMF/OVMF_CODE.fd"
+    },
+    "nvram": "/usr/share/OVMF/OVMF_VARS.secboot.fd"
+  }
+}

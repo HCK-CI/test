@@ -1,0 +1,31 @@
+name: Dependabot Tapioca updates
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+jobs:
+  build:
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'needs-gem-rbi') == 'true' }}'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_USER_TOKEN }}
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Setup AutoHCK
+        uses: ./.github/actions/setup-autohck
+
+      - name: Tapioca update
+        run: bundle exec tapioca gem
+      - name: add label
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          labels: needs-gem-rbi
+      - name: git update
+        run: |
+          git config --global user.name 'Daynix GitHub Actions'
+          git config --global user.email 'gha@daynix.com'
+          git add sorbet/rbi/gems
+          git commit --amend -m 'Update tapioca RBIs' sorbet/rbi/gems
+          git push --force -u origin HEAD:${{ github.event.pull_request.head.ref }}
