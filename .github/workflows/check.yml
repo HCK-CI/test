@@ -5,35 +5,8 @@ on:
     branches: [ master ]
 
 jobs:
-  check-run:
-    name: Check CI run
-    runs-on: ubuntu-latest
-    outputs:
-      need-run: ${{ steps.check.outputs.need-run }}
-    env:
-      PR_LABEL_DEPS: ${{ contains(github.event.pull_request.labels.*.name, 'dependencies') }}
-      PR_LABEL_RUBY: ${{ contains(github.event.pull_request.labels.*.name, 'ruby')  }}
-      PR_LABEL_RBI: ${{ contains(github.event.pull_request.labels.*.name, 'rbi-ready')  }}
-      PR_NEED_RUN: |
-        ${{ (contains(github.event.pull_request.labels.*.name, 'dependencies') &&
-        contains(github.event.pull_request.labels.*.name, 'ruby') &&
-        contains(github.event.pull_request.labels.*.name, 'rbi-ready')) || (
-        !contains(github.event.pull_request.labels.*.name, 'dependencies') &&
-        !contains(github.event.pull_request.labels.*.name, 'ruby')) }}
-    steps:
-    - name: Dump PR labels
-      run: |
-        echo "PR_LABEL_DEPS: ${{ env.PR_LABEL_DEPS }}"
-        echo "PR_LABEL_RUBY: ${{ env.PR_LABEL_RUBY }}"
-        echo "PR_LABEL_RBI: ${{ env.PR_LABEL_RBI }}"
-        echo "PR_NEED_RUN: ${{ env.PR_NEED_RUN }}"
-    - name: Check for dependencies label
-      id: check
-      run: echo ::set-output name=need-run::${{ env.PR_NEED_RUN }}
-
   analyze:
-    needs: [ check-run ]
-    if: needs.check-run.outputs.need-run == 'true'
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'needs-gem-rbi') == 'false' }}
     name: Analyze
     runs-on: ubuntu-latest
 
@@ -63,8 +36,7 @@ jobs:
       uses: github/codeql-action/analyze@v3
 
   rspec:
-    needs: [ check-run ]
-    if: needs.check-run.outputs.need-run == 'true'
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'needs-gem-rbi') == 'false' }}
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
@@ -78,8 +50,7 @@ jobs:
       run: bundle exec rspec
 
   typecheck:
-    needs: [ check-run ]
-    if: needs.check-run.outputs.need-run == 'true'
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'needs-gem-rbi') == 'false' }}
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
@@ -96,8 +67,7 @@ jobs:
       run: bundle exec srb typecheck
 
   rubocop:
-    needs: [ check-run ]
-    if: needs.check-run.outputs.need-run == 'true'
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'needs-gem-rbi') == 'false' }}'
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
