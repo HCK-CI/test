@@ -1,0 +1,4 @@
+{
+    "playlists_path": "./playlists",
+    "filters_path": "./filters/UpdateFilters.sql"
+}
