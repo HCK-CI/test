@@ -67,7 +67,7 @@ jobs:
       run: bundle exec srb typecheck
 
   rubocop:
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'needs-gem-rbi') == 'false' }}'
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'needs-gem-rbi') == 'false' }}
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
