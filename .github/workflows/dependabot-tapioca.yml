@@ -13,6 +13,17 @@ jobs:
         with:
           token: ${{ secrets.PAT_USER_TOKEN }}
           ref: ${{ github.event.pull_request.head.sha }}
+      - name: git info
+        run: git log --oneline | head -n10
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump GitHub PR context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github.event.pull_request) }}
+
+        run: echo "$GITHUB_CONTEXT"
       - name: Setup AutoHCK
         uses: ./.github/actions/setup-autohck
 
