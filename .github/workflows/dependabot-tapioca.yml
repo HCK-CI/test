@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'needs-gem-rbi') == 'true' }}'
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'needs-gem-rbi') }}'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
