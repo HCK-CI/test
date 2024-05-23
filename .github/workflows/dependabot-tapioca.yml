@@ -38,5 +38,5 @@ jobs:
           git config --global user.name 'Daynix GitHub Actions'
           git config --global user.email 'gha@daynix.com'
           git add sorbet/rbi/gems
-          git commit -m 'Update tapioca RBIs' sorbet/rbi/gems
-          git push -u origin HEAD:${{ github.event.pull_request.head.ref }}
+          git commit --amend -m 'Update tapioca RBIs' sorbet/rbi/gems
+          git push --force
