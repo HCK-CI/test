@@ -1,0 +1,13 @@
+{
+  "Win2019x64": {
+    "path": "en_windows_server_2019_updated_oct_2020_x64_dvd_7484fc77.iso",
+    "studio": {
+      "windows_image_names": "Windows Server 2019 SERVERSTANDARD",
+      "product_key": "AAAAA-AAAAA-AAAAA-AAAAA-AAAAA"
+    },
+    "client": {
+      "windows_image_names": "Windows Server 2019 SERVERSTANDARDCORE",
+      "product_key": "AAAAA-AAAAA-AAAAA-AAAAA-AAAAA"
+    }
+  }
+}

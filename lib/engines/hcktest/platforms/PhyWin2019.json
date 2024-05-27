@@ -1,0 +1,11 @@
+{
+  "name": "PhyWin2019",
+  "kit": "HLK1809server",
+  "setupmanager": "physhck",
+  "clients": {
+    "c1": {
+      "name": "CL1",
+      "winrm_port": 4002
+    }
+  }
+}
