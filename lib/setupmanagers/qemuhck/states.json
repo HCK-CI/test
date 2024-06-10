@@ -1,0 +1,69 @@
+{
+    "s3_state": {
+        "true": {
+            "define_variables": {
+                "@disable_s3_value@": 0
+            }
+        },
+        "false": {
+            "define_variables": {
+                "@disable_s3_value@": 1
+            }
+        }
+    },
+    "s4_state": {
+        "true": {
+            "define_variables": {
+                "@disable_s4_value@": 0
+            }
+        },
+        "false": {
+            "define_variables": {
+                "@disable_s4_value@": 1
+            }
+        }
+    },
+    "enlightenments_state": {
+        "true": {
+            "cpu_options": [
+                "hv_spinlocks=0x1FFF",
+                "hv_relaxed",
+                "hv_vapic",
+                "hv_time"
+            ]
+        }
+    },
+    "vhost_state": {
+        "true": {
+            "define_variables": {
+                "@vhost_value@": "on"
+            }
+        },
+        "false": {
+            "define_variables": {
+                "@vhost_value@": "off"
+            }
+        }
+    },
+    "viommu_state": {
+        "true": {
+            "devices_list": [
+                "iommu"
+            ]
+        }
+    },
+    "drive_unsafe_cache_state": {
+        "true": {
+            "drive_cache_options": [
+                ",cache=unsafe"
+            ]
+        }
+    },
+    "fw_type": {
+        "uefi": {
+            "devices_list": [
+                "tpm-tis"
+            ]
+        }
+    }
+}
